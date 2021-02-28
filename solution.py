@@ -4,23 +4,21 @@ from socket import *
 def smtp_client(port=1025, mailserver='127.0.0.1'):
 
 
-
-
    # Choose a mail server (e.g. Google mail server) if you want to verify the script beyond GradeScope
 
    GSERVER = "smtp.nyu.edu"
-   PORT = 25
+   PORT = 1025
    LOOPB = "127.0.0.1"
    #Dont use startTLS port. 465 is for SSL
 
    # Create socket
    clientSocket = socket(AF_INET, SOCK_STREAM) #(socket's address family, designation:TCP Socket)
 
-   clientSocket.connect((GSERVER,PORT))  #Connection object SOLICITATION SEND
+   clientSocket.connect((LOOPB,PORT))  #Connection object SOLICITATION SEND
 
 
    recv = clientSocket.recv(1024).decode() # RECIEVE
-   print("After Solicitaion: " + recv)
+
 
 
    # Send HELO command and print server response.
@@ -28,7 +26,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
    clientSocket.send(heloCommand.encode())
    #RESPONSE
    recv1 = clientSocket.recv(1024).decode()
-   print("After HELO command: " + recv1)
+
 
    # Send MAIL FROM command and print server response.
 
@@ -37,7 +35,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
    #response
    recv2 = clientSocket.recv(1024)
    recv2 = recv2.decode()
-   print("After MAIL FROM command: " + recv2)
+
 
 
    # Send RCPT TO command and print server response.
@@ -47,7 +45,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
    clientSocket.send(rcptTo.encode())
    recv3 = clientSocket.recv(1024)
    recv3 = recv3.decode()
-   print("After RCPT To command: " + recv3)
+
    # Fill in end
 
    # Send DATA command and print server response.
@@ -57,7 +55,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
    clientSocket.send(dataCom.encode())
    recv4 = clientSocket.recv(1024)
    recv4 = recv4.decode()
-   print("After DATA command: " + recv4)
+
 
    msg = """ \r\n Roses are red Violets are blue
          python is awesome
@@ -74,7 +72,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
    clientSocket.send(endmsg.encode())
    recv5 = clientSocket.recv(1024)
    recv5 = recv5.decode()
-   print("After Subject command: " + recv5)
+
    # Fill in end
 
    # Message ends with a single period.
@@ -90,7 +88,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
    recv10 = clientSocket.recv(1024)
    recv10 = recv10.decode()
    clientSocket.close()
-   print("After QUIT command: " + recv10)
+
    # Fill in end
 
 
